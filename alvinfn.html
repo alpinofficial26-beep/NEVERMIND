@@ -301,7 +301,144 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 ::-webkit-scrollbar-thumb{background:var(--hover);border-radius:4px}
 
 @media(max-width:1050px){body{grid-template-columns:240px 1fr;grid-template-areas:"side main""bar bar"}#lyr{display:none}}
-@media(max-width:660px){body{grid-template-columns:1fr;grid-template-areas:"main""bar"}#side{display:none}}
+/* ═══════════════════════════════════════════════════════
+   MOBILE STYLES (≤ 660px)
+   ═══════════════════════════════════════════════════════ */
+@media(max-width:660px){
+
+  /* ── Layout grid ── */
+  body{
+    grid-template-columns:1fr;
+    grid-template-rows:1fr 64px 56px;
+    grid-template-areas:"main""bar""mob-nav";
+    overflow:hidden;
+  }
+  #side{display:none}
+  #lyr{display:none}
+
+  /* ── Main scroll area ── */
+  #main{
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:4px;
+  }
+
+  /* ── Player bar (compact) ── */
+  #bar{
+    grid-area:bar;
+    padding:0 12px;
+    height:64px;
+    border-top:1px solid var(--border);
+    border-radius:0;
+    gap:8px;
+  }
+  .bar-track{gap:9px;min-width:0;flex:1}
+  #bar-thumb,.bar-ph{width:40px!important;height:40px!important;border-radius:9px!important;font-size:1.1rem!important;flex-shrink:0}
+  .bar-info{min-width:0}
+  .bar-title{font-size:.78rem}
+  .bar-artist{font-size:.68rem}
+  .bar-r{display:none}
+  .bar-ctrl{flex:0 0 auto}
+  .ctrl-btns{gap:4px}
+  .ctrl-btns .c-btn{width:30px;height:30px}
+  #btn-play{width:40px;height:40px}
+  #btn-play svg{width:18px;height:18px}
+  .prog-wrap{display:none}
+
+  /* ── Bottom navigation ── */
+  #mob-nav{
+    grid-area:mob-nav;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    background:var(--panel);
+    border-top:1px solid var(--border);
+    padding:0 4px;
+    height:56px;
+    z-index:10;
+  }
+  .mob-nav-btn{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    background:none;border:none;color:var(--muted);
+    font-family:var(--f);font-size:.56rem;font-weight:700;
+    cursor:pointer;padding:5px 10px;border-radius:12px;
+    transition:all .18s;letter-spacing:.3px;text-transform:uppercase;flex:1;
+  }
+  .mob-nav-btn svg{width:20px;height:20px;transition:all .18s}
+  .mob-nav-btn.on{color:var(--green)}
+  .mob-nav-btn.on svg{filter:drop-shadow(0 0 6px rgba(29,107,219,.5))}
+
+  /* ── Home view ── */
+  #home-view{padding:16px 14px 10px}
+  .home-greeting{font-size:1.2rem}
+  .home-sub{font-size:.75rem;margin-bottom:14px}
+  .home-section-title{font-size:.88rem;margin-bottom:10px}
+  .playlists-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .pl-card{padding:10px;border-radius:12px}
+  .pl-card-cover{height:88px;border-radius:8px;font-size:2.2rem}
+  .pl-card-name{font-size:.77rem}
+  .pl-card-sub{font-size:.67rem}
+
+  /* ── Search view ── */
+  .main-view{padding:14px 14px 10px}
+  #q{font-size:.85rem;padding:11px 88px 11px 40px}
+  #btn-search{padding:7px 14px;font-size:.75rem}
+  .search-wrap{margin-bottom:14px}
+  #res-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .r-card{padding:10px;border-radius:12px}
+  .r-name{font-size:.75rem}.r-art{font-size:.67rem}
+
+  /* ── Hero now playing ── */
+  .hero-card{padding:12px;gap:12px;border-radius:13px}
+  .hero-img,.hero-ph{width:60px!important;height:60px!important;border-radius:9px!important;font-size:1.5rem!important}
+  .hero-title{font-size:1rem}.hero-artist{font-size:.73rem;margin-bottom:8px}
+  .hbtn{padding:4px 10px;font-size:.67rem}
+
+  /* ── Playlist view ── */
+  .pv-header{padding:14px 14px 12px}
+  .pv-top{gap:14px;align-items:center}
+  .pv-cover,.pv-cover-ph{width:100px!important;height:100px!important;border-radius:10px!important;font-size:2.8rem!important}
+  .pv-title{font-size:1.3rem}.pv-sub{font-size:.73rem}
+  .pv-actions{padding:10px 14px;gap:8px;flex-wrap:wrap}
+  .pv-play-btn{width:44px;height:44px}
+  .pv-play-btn svg{width:18px;height:18px}
+  .pv-action-btn{padding:5px 11px;font-size:.7rem}
+  .pv-tracks{padding:0 14px 18px}
+  .track-list-header,.track-row{grid-template-columns:26px 1fr 48px}
+  .tr-album{display:none}
+  .tr-thumb,.tr-thumb-ph{width:33px!important;height:33px!important}
+  .tr-title{font-size:.77rem}.tr-artist{font-size:.66rem}.tr-dur{font-size:.67rem}
+
+  /* ── Modals ── */
+  .modal{width:calc(100vw - 28px);padding:20px 16px;border-radius:16px}
+  .modal h3{font-size:.93rem}
+  .modal-input{font-size:.84rem;padding:9px 12px}
+  .auth-box{padding:26px 18px;border-radius:16px}
+  .auth-btns{flex-direction:column;align-items:stretch}
+  .btn-login,.btn-back{justify-content:center;text-align:center}
+
+  /* ── Toast ── */
+  #toast{bottom:132px;font-size:.73rem;padding:8px 16px;max-width:84vw;white-space:normal;text-align:center}
+
+  /* ── Fullscreen lyrics ── */
+  #fs-lyr-scroll{padding:16px 5% 140px}
+  .fs-ll{font-size:1.45rem;line-height:1.35}
+  .fs-ll.active{font-size:1.65rem}
+  #fs-bar{padding:12px 18px 20px}
+  #fs-ctrl{gap:14px}
+  #fs-btn-play{width:46px;height:46px}
+  #fs-btn-play svg{width:19px;height:19px}
+  .fs-btn svg{width:18px;height:18px}
+
+  /* ── Empty states ── */
+  .empty{padding:36px 18px}
+  .empty i{font-size:2.4rem}
+  .empty h3{font-size:.97rem}
+  .empty p{font-size:.74rem}
+  .pv-empty{font-size:.77rem;padding:32px 14px}
+  .pv-empty-icon{font-size:1.9rem}
+  .sec-label{font-size:.6rem}
+}
 
 /* FULLSCREEN LYRICS */
 #fs-lyr{display:none;position:fixed;inset:0;z-index:500;flex-direction:column;overflow:hidden;transition:background 1.2s ease;}
@@ -642,6 +779,25 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       </button>
     </div>
   </div>
+</div>
+
+<div id="mob-nav" style="display:none">
+  <button class="mob-nav-btn on" id="mob-btn-home" onclick="mobNav('home')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Beranda
+  </button>
+  <button class="mob-nav-btn" id="mob-btn-search" onclick="mobNav('search')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Cari
+  </button>
+  <button class="mob-nav-btn" id="mob-btn-playlist" onclick="mobNav('playlist')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    Playlist
+  </button>
+  <button class="mob-nav-btn" id="mob-btn-logout" onclick="doLogout()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    Keluar
+  </button>
 </div>
 
 <div id="toast"></div>
@@ -1394,7 +1550,54 @@ document.getElementById('add-song-modal').addEventListener('click', e => { if(e.
 document.getElementById('rename-modal').addEventListener('click', e => { if(e.target===document.getElementById('rename-modal')) closeRenameModal(); });
 
 // ─── Helpers ─────────────────────────────────────────────
-function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+// ─── Mobile Nav ───────────────────────────────────────────
+function isMobile(){ return window.innerWidth <= 660; }
+
+function initMobileNav(){
+  const nav = document.getElementById('mob-nav');
+  if(isMobile()) nav.style.display = 'flex';
+  else nav.style.display = 'none';
+}
+
+function mobNav(tab){
+  const btns = ['home','search','playlist','logout'];
+  btns.forEach(b => {
+    const el = document.getElementById('mob-btn-'+b);
+    if(el) el.classList.remove('on');
+  });
+  const active = document.getElementById('mob-btn-'+tab);
+  if(active) active.classList.add('on');
+
+  if(tab==='home') showHomeView();
+  else if(tab==='search') showSearchView();
+  else if(tab==='playlist') openNewPlaylistModal();
+}
+
+// Sync desktop nav with mobile nav
+const _origShowHome = showHomeView;
+window.showHomeView = function(){
+  _origShowHome();
+  ['home','search','playlist'].forEach(b=>{
+    const el=document.getElementById('mob-btn-'+b);
+    if(el) el.classList.remove('on');
+  });
+  const h=document.getElementById('mob-btn-home');
+  if(h) h.classList.add('on');
+};
+const _origShowSearch = showSearchView;
+window.showSearchView = function(){
+  _origShowSearch();
+  ['home','search','playlist'].forEach(b=>{
+    const el=document.getElementById('mob-btn-'+b);
+    if(el) el.classList.remove('on');
+  });
+  const s=document.getElementById('mob-btn-search');
+  if(s) s.classList.add('on');
+};
+
+window.addEventListener('resize', initMobileNav);
+initMobileNav();
+
 function toast(msg,d=2700){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),d);}
 
 // ─── Fullscreen Lyrics ────────────────────────────────────
