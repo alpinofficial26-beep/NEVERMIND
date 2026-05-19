@@ -1387,6 +1387,10 @@ function playPrev(){
   if (prev) loadPlay(prev, currentPlaylistId);
 }
 
+// ─── Helpers ─────────────────────────────────────────────
+function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function toast(msg,d=2700){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),d);}
+
 // ─── SEARCH via iTunes ────────────────────────────────────
 async function doSearch(){
   const q = document.getElementById('q').value.trim(); if(!q) return;
@@ -1597,8 +1601,6 @@ window.showSearchView = function(){
 
 window.addEventListener('resize', initMobileNav);
 initMobileNav();
-
-function toast(msg,d=2700){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),d);}
 
 // ─── Fullscreen Lyrics ────────────────────────────────────
 const FS_COLORS=['#0d2f6b','#0d1f4a','#1a2a6b','#0d3a5c','#0a1f52','#162b6b','#0d3052','#1a1a6b'];
