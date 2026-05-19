@@ -903,19 +903,19 @@ function scheduleSave() {
   saveTimeout = setTimeout(async () => {
     if (!currentUser) return;
     try {
-      // Simpan playlists tanpa foto base64 yang besar
       const toSave = {};
       for (const id in playlists) {
         const pl = playlists[id];
         toSave[id] = {
           id: pl.id,
           name: pl.name,
-          coverThumb: pl.coverThumb || '', // URL kecil saja
+          coverThumb: pl.coverThumb || '',
           tracks: (pl.tracks || []).map(t => ({
-            title: t.title,
-            artist: t.artist,
+            title: t.title || '',
+            artist: t.artist || '',
             thumb: t.thumb || '',
-            _query: t._query
+            photo: t.photo || '',
+            _query: t._query || ''
           }))
         };
       }
@@ -938,12 +938,19 @@ async function loadAllPlaylistsFromCloud() {
       if (data && typeof data === 'object') {
         playlists = {};
         for (const id in data) {
+          const raw = data[id];
           playlists[id] = {
             id,
-            name: data[id].name || 'Playlist',
-            coverThumb: data[id].coverThumb || '',
-            cover: data[id].coverThumb || '', // bisa diperluas
-            tracks: Array.isArray(data[id].tracks) ? data[id].tracks : []
+            name: raw.name || 'Playlist',
+            coverThumb: raw.coverThumb || '',
+            cover: raw.coverThumb || '',
+            tracks: Array.isArray(raw.tracks) ? raw.tracks.map(t => ({
+              title: t.title || '',
+              artist: t.artist || '',
+              thumb: t.thumb || '',
+              photo: t.photo || '',
+              _query: t._query || (t.artist + '|||' + t.title + '|||0')
+            })) : []
           };
         }
         const count = Object.keys(playlists).length;

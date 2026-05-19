@@ -488,11 +488,10 @@ label {
     onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
   import {
-    getFirestore,
-    doc,
-    setDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    getDatabase,
+    ref,
+    set
+  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCeMRU4JgIOlS_M9hgZfDKrkIHyAFncVjE",
@@ -507,7 +506,7 @@ label {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getFirestore(app);
+  const db = getDatabase(app);
   const provider = new GoogleAuthProvider();
 
   // Redirect jika sudah login
@@ -524,9 +523,8 @@ label {
     createUserWithEmailAndPassword,
     signInWithPopup,
     updateProfile,
-    doc,
-    setDoc,
-    serverTimestamp
+    ref,
+    set
   };
 </script>
 
@@ -662,22 +660,21 @@ function handleAuthError(code) {
   return errors[code] || 'Terjadi kesalahan. Silakan coba lagi.';
 }
 
-// ── Save user to Firestore ────────────────────────────────
+// ── Save user to Realtime Database ───────────────────────
 async function saveUserData(user, displayName) {
   try {
     const fn = window._fbFunctions;
     const db = window._firebaseDb;
-    await fn.setDoc(fn.doc(db, 'users', user.uid), {
+    await fn.set(fn.ref(db, 'users/' + user.uid), {
       uid: user.uid,
       displayName: displayName || user.displayName || '',
       email: user.email,
       photoURL: user.photoURL || null,
-      playlists: [],
-      createdAt: fn.serverTimestamp(),
-      lastLogin: fn.serverTimestamp(),
-    }, { merge: true });
+      createdAt: Date.now(),
+      lastLogin: Date.now(),
+    });
   } catch (e) {
-    console.warn('Gagal menyimpan data user ke Firestore:', e);
+    console.warn('Gagal menyimpan data user ke Database:', e);
   }
 }
 
